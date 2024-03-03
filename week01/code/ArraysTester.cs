@@ -38,8 +38,22 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        
+        // Declare and initialize resulting Array with the size of the lenght
+        var multiples = new double[length];
+        // declare a variable to add up the numbers;
+        double multiple = 0.0;
+        //create a loop that will repeat from 1 to 'length' number of times
+        for (int i = 1; i <= length; i++)
+        {
+             // add up the number to the multiple variable
+            multiple += number;
+            // Assign the multiple variable it to the array in the spoecific index-1
+            multiples[i-1] = multiple;
+        }
 
-        return new double[0]; // replace this return statement with your own
+        // return array with results
+        return multiples; 
     }
     
     /// <summary>
@@ -56,6 +70,13 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
+        
+        // insert the last elements in the temporary array
+        var tempData = data.GetRange(data.Count - amount, amount);
+        // remove elemments from original array
+        data.RemoveRange(data.Count - amount, amount);
+        // insert removed elements at the beginning from the temp data
+        data.InsertRange(0,tempData);
+        
     }
 }
