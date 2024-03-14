@@ -8,6 +8,9 @@ public class Program
         DuplicateCounter.Run();
 
         Console.WriteLine("\n======================\nTranslator\n======================");
-        TranslatorSolution.Run();
+        Translator.Run();
+
+        Console.WriteLine("\n======================\nFind Duplicated\n======================");
+        DuplicateFinder.Run();
     }
 }

@@ -14,7 +14,24 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var q1 = new CustomerService(2);
+        // q1.ServeCustomer();
+        q1.AddNewCustomer();
+        q1.AddNewCustomer();
+        q1.AddNewCustomer();
+        
 
+
+        
+        Console.WriteLine(q1.ToString());
+
+        Console.WriteLine("**Should show error, queue is full");
+        q1.AddNewCustomer();// 13
+        q1.AddNewCustomer();// 14
+        
+        q1.ServeCustomer();
+        Console.WriteLine("**Should show queue size is 11");
+        Console.WriteLine(q1.ToString());
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
@@ -23,6 +40,10 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 2");
+        var q2 = new CustomerService(0);
+        Console.WriteLine("**Should show error, queue is empty");
+        q1.ServeCustomer();
+
 
         // Defect(s) Found: 
 
@@ -67,7 +88,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,8 +109,14 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        if (_queue.Count == 0) {
+            Console.WriteLine("Error. the Queue is mepty.");
+            return;
+        }
+        //should assign before poping out
         var customer = _queue[0];
+        
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 
