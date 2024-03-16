@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 public static class SetsAndMapsTester {
@@ -111,6 +112,19 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var matches = new HashSet<string>();
+        for (int i = 0; i < words.Length; i++)
+        {
+            var symmetic = string.Join("", words[i][1], words[i][0]);
+            //Console.WriteLine($"searching: {symmetic}");
+            if(matches.Contains(symmetic))
+            {
+                Console.WriteLine($"{words[i]} & {symmetic}");
+            }
+            else{
+                matches.Add(words[i]);
+            }
+        }
     }
 
     /// <summary>
@@ -132,6 +146,12 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if(degrees.ContainsKey(fields[3])){
+                degrees[fields[3]]++;
+            }
+            else{
+                degrees.Add(fields[3], 1);
+            }
         }
 
         return degrees;
@@ -158,6 +178,41 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
+        
+        word1 = word1.ToUpper().Replace(" ","");
+        word2 = word2.ToUpper().Replace(" ","");
+        
+        var wordLetters = new Dictionary<char, int>();
+
+        if (word1.Length == word2.Length)
+        {
+            foreach (var letter in word1)
+            {
+                if (wordLetters.ContainsKey(letter))
+                {
+                    wordLetters[letter] ++;
+                }
+                else
+                {
+                    wordLetters[letter] = 1;
+                }
+            }
+            foreach (var letter in word2)
+            {
+                if (wordLetters.ContainsKey(letter))
+                    wordLetters[letter] --;
+                else
+                    wordLetters[letter] = -1;                
+            }
+
+            var sum = 0;
+            foreach (var value in wordLetters.Values)
+            {
+                 sum += int.Abs(value);
+            }
+            return sum == 0;
+        }
+        
         return false;
     }
 
@@ -235,5 +290,9 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach(var feature in featureCollection.Features)
+        {
+            Console.WriteLine($"{feature.Properties.Place} - Mag {feature.Properties.Mag:0.0#}");
+        }
     }
 }
